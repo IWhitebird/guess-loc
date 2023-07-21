@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './home.css';
+import env from "react-dotenv";
 
 const Home = ({ lat, lng }) => {
   const mapContainerRef = useRef(null);
@@ -10,7 +11,8 @@ const Home = ({ lat, lng }) => {
   useEffect(() => {
     const loadGoogleMapScript = () => {
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDe3s-A5dg6QWWI16Sd11C3_JtuoYavrys&callback=initMap`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&callback=initMap`;
+      console.log(script.src)
       script.async = true;
       script.defer = true;
       window.initMap = initMap;
