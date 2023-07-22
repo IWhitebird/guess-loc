@@ -10,7 +10,7 @@ const Home = ({ mylat, mylng }) => {
   const [lng, setLng] = useState(mylng);
   const [points, setPoints] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [miniWindow, setMiniWindow] = useState(true);
+  const [miniWindow, setMiniWindow] = useState(false);
 
   const mapContainerRef = useRef(null);
   const streetViewContainerRef = useRef(null);
@@ -182,12 +182,9 @@ const Home = ({ mylat, mylng }) => {
   // Example usage in the submitHandle function:
   function submitHandle() {
     // Assuming lat, lng, guessLat, and guessLng are defined elsewhere
-
     setLoading(true);
-    setMiniWindow(true);
-
-    const distance = CalcDistance(lat, guessLat , lng , guessLng);
     
+    const distance = CalcDistance(lat, guessLat , lng , guessLng);
 
     var newPoints = Math.round(20000 - distance)
     
@@ -198,12 +195,10 @@ const Home = ({ mylat, mylng }) => {
     if(newPoints >= 8000) {
       newPoints = Math.round(newPoints * 2 / 10);
      }
-
-
-
     setPoints(points + newPoints);
 
     setLoading(false);
+    setMiniWindow(true);
   
   }
   
@@ -218,7 +213,6 @@ const Home = ({ mylat, mylng }) => {
       <button id="guessButton" onClick={submitHandle}>Submit</button>  
       <div id="score">Score = {points}</div>
       {miniWindow && <Submit 
-        myref={mapContainerRef} 
         lat1={lat} lng1={lng} 
         lat2={guessLat} lng2={guessLng} 
         generateRandomPoint={generateRandomPoint} 
