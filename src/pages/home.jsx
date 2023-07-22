@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './home.css';
 import env from "react-dotenv";
-import randomStreetView from 'random-streetview';
+import randomStreetView  from "../script"
 
 const Home = ({ mylat, mylng }) => {
 
@@ -137,27 +137,10 @@ const Home = ({ mylat, mylng }) => {
   }
 
 
-
-
-  // function generateRandomPoint() {
-  //   let mylat = Math.random() * (85 - (-85)) + (-85);
-  //   let mylng = Math.random() * (180 - (-180)) + (-180);
-  
-  //   const metadataResponse = fetch(`https://maps.googleapis.com/maps/api/streetview/metadata?size=600x300&location=${mylat},${mylng}&key=${env.GOOGLE_API_KEY}`);
-    
-  //   if (metadataResponse.ok) {
-  //     console.log("Street View Available");
-  //     setLat(mylat);
-  //     setLng(mylng);
-  //     console.log(metadataResponse.ok)
-  //   } else {
-  //     console.log("Street View Not Available");
-  //     generateRandomPoint();
-  //   }
-  // }
-
   async function generateRandomPoint() {
     const locations = await randomStreetView.getRandomLocations(1);
+    setLat(locations[0][0]);
+    setLng(locations[0][1]);
     console.log(locations);
   }
 
