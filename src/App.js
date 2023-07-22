@@ -1,11 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import Home from './pages/home';
+import { useState } from 'react';
 
 function App() {
+
+  // 35.6688263916039, 139.7625525894246
   return (
     <div>
-      <Home lat = {35.783659067971826}  lng = {139.74849236525725} />
+      <Home mylat = {35.6688263916039}  mylng = {139.7625525894246} />
     </div>
   );
 }

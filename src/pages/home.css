@@ -13,20 +13,39 @@
     z-index: 0;
   }
   
-  #mapContainer {
-    position: absolute;
-    height: 300px;
-    width: 300px;
-    z-index: 1;
-    right: 0px;
-    bottom: 0px;
-    margin: 30px;
-    transition: all 0.5s ease-in-out;
-  }
+    #mapContainer {
+      position: absolute;
+      height: 300px;
+      width: 300px;
+      z-index: 1;
+      right: 0px;
+      bottom: 70px;
+      margin: 40px;
+      transition: all 0.5s ease-in-out;
+      opacity: 0.5;
+      cursor: crosshair;
+    }
+
+    #guessButton{
+      position: absolute;
+      background-color: #4ce4df8f;
+      border-radius: 30px;
+      height: 50px;
+      width: 300px; 
+      right: 40px;
+      bottom: 40px; 
+      z-index: 2;  
+    }
 
     #mapContainer:hover {
         height: 400px;
         width: 500px;
         margin: 50px;
         cursor: crosshair;
+        opacity: 1;
+    }
+
+
+    .gm-style-cc {
+      opacity: 0.4;
     }
