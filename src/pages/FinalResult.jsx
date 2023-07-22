@@ -1,10 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import './finalresult.css'
 
 const FinalResult = ({score , onReset}) => {
   return (
-    <div>
-        <div id="final_score">Your Score is {score} </div>
+    <div className='w-full relative'>
+        <div id="final_score">Your Score is <span className='text-cyan-400'>{score}</span> </div>
         <button id="btn_new" onClick={onReset}>New Game</button>
     </div>
   )

@@ -3,7 +3,7 @@ import './submit.css';
 import Score from './Score';
 import FinalResult from './FinalResult';
 
-const Submit = ({ myref, lat1, lng1, generateRandomPoint, score  , setScore, distance ,guessLat, guessLng , rounds }) => {
+const Submit = ({ lat1, lng1 ,guessLat, guessLng, generateRandomPoint, score , setScore, distance  , rounds , setRounds }) => {
   const submitMapContainerRef = useRef(null);
 
   const [midLat, setMidLat] = useState(0);
@@ -100,6 +100,7 @@ useEffect(() => {
 
  function onReset() {
     setScore(0);
+    setRounds(5);
     generateRandomPoint();
  }
 
@@ -110,11 +111,11 @@ useEffect(() => {
       <div id="distance_div">{Math.round(distance)} Km</div>
 
       {
-        rounds === 0 ? <FinalResult score={score} reset={onReset} /> : 
-        <div>
+        rounds === 0 ? (<FinalResult score={score} onReset={onReset} />) : 
+        (<div>
           <button id="generateButton" onClick={generateRandomPoint}>Next</button>
           <button id="btn_reset" onClick={onReset}>Reset</button>
-        </div>
+        </div>)
 
       }
     

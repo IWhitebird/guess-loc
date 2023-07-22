@@ -13,7 +13,7 @@ const Home = ({ mylat, mylng }) => {
   const [loading, setLoading] = useState(false);
   const [miniWindow, setMiniWindow] = useState(false);
   const [distance, setDistance] = useState(0);
-  const [rounds , setRounds] = useState(0);
+  const [rounds , setRounds] = useState(5);
   const mapContainerRef = useRef(null);
   const streetViewContainerRef = useRef(null);
   const mapRef = useRef(null);
@@ -210,6 +210,8 @@ const Home = ({ mylat, mylng }) => {
       guessLng={guessLng}
       score={points}
       setScore={setPoints}
+      rounds={rounds}
+      setRounds={setRounds}
       />
       )}
       <Score points={points} />
