@@ -38,13 +38,3 @@
 }
 
 
-#guessButton{
-  position: absolute;
-  background-color: #4ce4df8f;
-  border-radius: 30px;
-  height: 50px;
-  width: 300px; 
-  right: 40px;
-  bottom: 40px; 
-  z-index: 2;  
-}

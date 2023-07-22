@@ -1,0 +1,32 @@
+
+
+#submitMapContainer {
+    height: 700px;
+    width: 100%;
+    position: absolute;
+    top: 5rem;
+}
+
+#generateButton{
+    position: absolute;
+    background-color: #10e13d8f;
+    border-radius: 30px;
+    height: 50px;
+    width: 300px; 
+    left: 800px;
+    bottom: 50px; 
+    z-index: 2;  
+    transition: all 0.2s ease-in-out;
+  }
+
+  #generateButton:hover{
+    background-color: #10e13d;
+    cursor: pointer;
+    scale: 1.1;
+  }
+
+  #generateButton:active{
+    background-color: #e13610;
+    cursor: pointer;
+    scale: 1.1;
+  }
