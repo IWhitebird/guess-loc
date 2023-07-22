@@ -2,19 +2,23 @@ import React, { useEffect, useRef, useState } from 'react';
 import './home.css';
 import env from "react-dotenv";
 import randomStreetView  from "../script"
+import Submit from "./submit"
 
 const Home = ({ mylat, mylng }) => {
 
   const [lat, setLat] = useState(mylat);
   const [lng, setLng] = useState(mylng);
+  const [points, setPoints] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [miniWindow, setMiniWindow] = useState(true);
 
   const mapContainerRef = useRef(null);
   const streetViewContainerRef = useRef(null);
   const mapRef = useRef(null);
-  
   var marker;
-  var guessLat;
-  var guessLng;
+  var guessLat ;
+  var guessLng ;
+
 
 
 
@@ -36,12 +40,12 @@ const Home = ({ mylat, mylng }) => {
         center: { lat :0, lng:0 },
         zoom: 0.641,
         minZoom:0.641,
-        disableDefaultUI: true, // Hide the default user interface controls
-        mapTypeControl: false, // Remove the map type controls
+        disableDefaultUI: true, 
+        mapTypeControl: false, 
         keyboardShortcuts: false,
         streetViewControl: false,
         mapTypeControl: false,
-        mapTypeId: window.google.maps.MapTypeId.ROADMAP, // Use the default map type without additional information
+        mapTypeId: window.google.maps.MapTypeId.ROADMAP, 
         restriction: {
           latLngBounds: {
             north: 85, // Set the northern boundary (latitude)
@@ -112,7 +116,7 @@ const Home = ({ mylat, mylng }) => {
 
     if (!window.google) {
       loadGoogleMapScript();
-    } else {
+    } else {  
       initMap();
     }
 
@@ -129,7 +133,7 @@ const Home = ({ mylat, mylng }) => {
       });
     }
 
-    guessLat = marker.position.lat();
+    guessLat= marker.position.lat();
     guessLng = marker.position.lng();
 
     console.log("Marker Lat: " + guessLat);
@@ -142,15 +146,84 @@ const Home = ({ mylat, mylng }) => {
     setLat(locations[0][0]);
     setLng(locations[0][1]);
     console.log(locations);
+    setMiniWindow(false);
   }
 
+  function CalcDistance(lat1,lat2, lon1, lon2){
+      // The math module contains a function
+      // named toRadians which converts from
+      // degrees to radians.
 
+      console.log(lat1 , lat2, lon1, lon2)
+
+
+      lon1 =  lon1 * Math.PI / 180;
+      lon2 = lon2 * Math.PI / 180;
+      lat1 = lat1 * Math.PI / 180;
+      lat2 = lat2 * Math.PI / 180;
+
+      // Haversine formula
+      let dlon = lon2 - lon1;
+      let dlat = lat2 - lat1;
+      let a = Math.pow(Math.sin(dlat / 2), 2)
+      + Math.cos(lat1) * Math.cos(lat2)
+      * Math.pow(Math.sin(dlon / 2),2);
+
+      let c = 2 * Math.asin(Math.sqrt(a));
+
+      // Radius of earth in kilometers. Use 3956
+      // for miles
+      let r = 6371;
+
+      // calculate the result
+      return(c * r);
+  }
+
+  // Example usage in the submitHandle function:
+  function submitHandle() {
+    // Assuming lat, lng, guessLat, and guessLng are defined elsewhere
+
+    setLoading(true);
+    setMiniWindow(true);
+
+    const distance = CalcDistance(lat, guessLat , lng , guessLng);
+    
+
+    var newPoints = Math.round(20000 - distance)
+    
+    if (newPoints < 8000) { 
+      newPoints = Math.round(newPoints / 10);
+    }
+
+    if(newPoints >= 8000) {
+      newPoints = Math.round(newPoints * 2 / 10);
+     }
+
+
+
+    setPoints(points + newPoints);
+
+    setLoading(false);
+  
+  }
+  
 
   return (
     <div className='myDiv'>
+
       <div id="streetViewContainer" ref={streetViewContainerRef}></div>
       <div id="mapContainer" ref={mapContainerRef}></div>
-      <button id="guessButton" onClick={generateRandomPoint}>Generate Random Point</button>
+
+
+      <button id="guessButton" onClick={submitHandle}>Submit</button>  
+      <div id="score">Score = {points}</div>
+      {miniWindow && <Submit 
+        myref={mapContainerRef} 
+        lat1={lat} lng1={lng} 
+        lat2={guessLat} lng2={guessLng} 
+        generateRandomPoint={generateRandomPoint} 
+      /> }
+
     </div>
   );
 };

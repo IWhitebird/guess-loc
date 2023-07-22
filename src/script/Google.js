@@ -14,10 +14,10 @@ class Google extends EventEmitter  {
     }
 
     init() {
-        this.initCalled = true;
+        this.initCalled = true; 
         loadGoogleMapsApi({
             libraries: ['geometry'] ,
-            key : process.env.GOOGLE_API_KEY,
+            key : 'AIzaSyDe3s-A5dg6QWWI16Sd11C3_JtuoYavrys',
         }).then(googleMaps => {
             this.maps = googleMaps;
             this.emit('maps');
