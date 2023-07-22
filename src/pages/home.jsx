@@ -3,18 +3,21 @@ import "./home.css";
 import env from "react-dotenv";
 import randomStreetView from "../script";
 import Submit from "./submit";
+import Score from "./Score";
 
 const Home = ({ mylat, mylng }) => {
+  
   const [lat, setLat] = useState(mylat);
   const [lng, setLng] = useState(mylng);
   const [points, setPoints] = useState(0);
   const [loading, setLoading] = useState(false);
   const [miniWindow, setMiniWindow] = useState(false);
   const [distance, setDistance] = useState(0);
-
+  const [rounds , setRounds] = useState(0);
   const mapContainerRef = useRef(null);
   const streetViewContainerRef = useRef(null);
   const mapRef = useRef(null);
+
   let marker;
   const [guessLat, setGuessLat] = useState(0);
   const [guessLng, setGuessLng] = useState(0);
@@ -30,6 +33,7 @@ const Home = ({ mylat, mylng }) => {
     };
 
     const initMap = () => {
+
       const mapOptions = {
         center: { lat: 0, lng: 0 },
         zoom: 0.641,
@@ -130,10 +134,6 @@ const Home = ({ mylat, mylng }) => {
 
     setGuessLat(marker.position.lat());
     setGuessLng(marker.position.lng());
-
-
-    console.log("Marker Lat: " + guessLat);
-    console.log("Marker Lng: " + guessLng);
   }
 
   async function generateRandomPoint() {
@@ -185,6 +185,7 @@ const Home = ({ mylat, mylng }) => {
       newPoints = Math.round((newPoints * 2) / 10);
     }
     setPoints(points + newPoints);
+    setRounds(rounds - 1);
     setLoading(false);
     setMiniWindow(true);
     setDistance(distance);
@@ -196,9 +197,9 @@ const Home = ({ mylat, mylng }) => {
     <div id="mapContainer" ref={mapContainerRef}></div>
 
     <button id="guessButton" onClick={submitHandle}>
-      Submit
+      Guess
     </button>
-    <div id="score">Score = {points}</div>
+    <div id="rounds_div">{rounds} / 5</div>
     {miniWindow && (
       <Submit
       lat1={lat}
@@ -207,8 +208,11 @@ const Home = ({ mylat, mylng }) => {
       distance={distance}
       guessLat={guessLat}
       guessLng={guessLng}
-    />
-    )}
+      score={points}
+      setScore={setPoints}
+      />
+      )}
+      <Score points={points} />
   </div>
   );
 };

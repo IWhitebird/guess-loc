@@ -1,0 +1,12 @@
+#final_score{
+    display: absolute;
+    background: #000;
+    width: 200px;
+    top: 100px;
+}
+
+#btn_new{
+    display: absolute;
+    background: #000;
+    width: 200px;
+}

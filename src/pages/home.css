@@ -6,12 +6,12 @@
     height: 100vh;
   }
   
- #streetViewContainer {
-    position: absolute;
-    height: 100vh;
-    width: 100%;
-    z-index: 0;
-  }
+  #streetViewContainer {
+      position: absolute;
+      height: 100vh;
+      width: 100%;
+      z-index: 0;
+    }
   
     #mapContainer {
       position: absolute;
@@ -21,7 +21,7 @@
       right: 0px;
       bottom: 70px;
       margin: 40px;
-      transition: all 0.5s ease-in-out;
+      transition: all 0.2s ease-in-out;
       opacity: 0.5;
       cursor: crosshair;
     }
@@ -35,6 +35,13 @@
       right: 40px;
       bottom: 40px; 
       z-index: 2;  
+      transition: all 0.2s ease-in-out;
+    }
+
+    #guessButton:hover{
+      background-color: #4ce4df;
+      cursor: pointer;
+      scale: 1.1;
     }
 
     #mapContainer:hover {
@@ -62,16 +69,31 @@
       font-size: xx-large;
       font-weight: 700;
       background: #53525270;
-      color: rgba(142, 190, 95, 0.91);
+      color: rgb(128, 255, 0);
       text-align: center;
       height: 50px;
       min-width: 200px; 
       left: 40px;
       top: 40px; 
-      z-index: 2;      
+      z-index: 10;      
     }
 
 
     .gm-style-cc {
       opacity: 0.4;
+    }
+
+
+    #rounds_div{
+      position: absolute;
+      font-size: xx-large;
+      font-weight: 700;
+      background: #53525270;
+      color: rgb(128, 255, 0);
+      text-align: center;
+      height: 50px;
+      min-width: 200px; 
+      right: 40px;
+      top: 40px; 
+      z-index: 10;    
     }
