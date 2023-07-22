@@ -107,8 +107,8 @@ const Home = ({ mylat, mylng }) => {
         map.setOptions({draggableCursor:'crosshair'});
       });
       // Add click event listener to the map
-      map.addListener ('click', (event) => {
-        placeMarker(event.latLng);
+      map.addListener ('click', (event) => { 
+      placeMarker(event.latLng);
       });
     };
 
@@ -133,8 +133,9 @@ const Home = ({ mylat, mylng }) => {
       });
     }
 
-    guessLat= marker.position.lat();
+    guessLat=  marker.position.lat();
     guessLng = marker.position.lng();
+
 
     console.log("Marker Lat: " + guessLat);
     console.log("Marker Lng: " + guessLng);
@@ -145,7 +146,6 @@ const Home = ({ mylat, mylng }) => {
     const locations = await randomStreetView.getRandomLocations(1);
     setLat(locations[0][0]);
     setLng(locations[0][1]);
-    console.log(locations);
     setMiniWindow(false);
   }
 
@@ -153,10 +153,6 @@ const Home = ({ mylat, mylng }) => {
       // The math module contains a function
       // named toRadians which converts from
       // degrees to radians.
-
-      console.log(lat1 , lat2, lon1, lon2)
-
-
       lon1 =  lon1 * Math.PI / 180;
       lon2 = lon2 * Math.PI / 180;
       lat1 = lat1 * Math.PI / 180;
@@ -183,10 +179,12 @@ const Home = ({ mylat, mylng }) => {
   function submitHandle() {
     // Assuming lat, lng, guessLat, and guessLng are defined elsewhere
     setLoading(true);
+
     
     const distance = CalcDistance(lat, guessLat , lng , guessLng);
 
     var newPoints = Math.round(20000 - distance)
+
     
     if (newPoints < 8000) { 
       newPoints = Math.round(newPoints / 10);
@@ -199,6 +197,8 @@ const Home = ({ mylat, mylng }) => {
 
     setLoading(false);
     setMiniWindow(true);
+
+    console.log(lat , guessLat , lng , guessLng)
   
   }
   

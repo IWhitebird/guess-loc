@@ -3,7 +3,7 @@ import './submit.css';
 
 const Submit = ({ myref, lat1, lng1, lat2, lng2, generateRandomPoint }) => {
   const submitMapContainerRef = useRef(null);
-
+  
   useEffect(() => {
     let map;
     let marker1;
