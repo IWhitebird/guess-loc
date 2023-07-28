@@ -4,6 +4,7 @@ import env from "react-dotenv";
 import randomStreetView from "../script";
 import Submit from "./submit";
 import Score from "./Score";
+import Dashboard from "./dashboard";
 
 const Home = ({ mylat, mylng }) => {
   
@@ -114,13 +115,18 @@ const Home = ({ mylat, mylng }) => {
       });
     };
 
-    if (!window.google) {
-      loadGoogleMapScript();
-    } else {
-      initMap();
-    }
-  }, [lat, lng]);
-
+    try {
+      if (!window.google) {
+        loadGoogleMapScript();
+      } else {
+        initMap();
+      }
+    } catch (error) {
+      console.error("Error while initializing Google Maps:", error);
+    } 
+  }
+, [lat, lng]);
+  
   // Function to place a marker on the map
   function placeMarker(location) {
     if (marker) {
@@ -137,10 +143,14 @@ const Home = ({ mylat, mylng }) => {
   }
 
   async function generateRandomPoint() {
-    const locations = await randomStreetView.getRandomLocations(1);
-    setLat(locations[0][0]);
-    setLng(locations[0][1]);
-    setMiniWindow(false);
+    try {
+      const locations = await randomStreetView.getRandomLocations(1);
+      setLat(locations[0][0]);
+      setLng(locations[0][1]);
+      setMiniWindow(false);
+    } catch (error) {
+      console.error("Error while generating random point:", error);
+    }
   }
 
   function CalcDistance(lat1, lat2, lon1, lon2) {
@@ -171,24 +181,30 @@ const Home = ({ mylat, mylng }) => {
 
   // Example usage in the submitHandle function:
   function submitHandle() {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const distance = CalcDistance(lat, guessLat, lng, guessLng);
-    console.log(distance);
-    var newPoints = Math.round(20000 - distance);
-
-    if (newPoints < 8000) {
-      newPoints = Math.round(newPoints / 10);
+      const distance = CalcDistance(lat, guessLat, lng, guessLng);
+      console.log(distance);
+      var newPoints = Math.round(20000 - distance);
+  
+      if (newPoints < 8000) {
+        newPoints = Math.round(newPoints / 10);
+      }
+  
+      if (newPoints >= 8000) {
+        newPoints = Math.round((newPoints * 2) / 10);
+      }
+      setPoints(points + newPoints);
+      setRounds(rounds - 1);
+      setLoading(false);
+      setMiniWindow(true);
+      setDistance(distance);
+      
+    } catch (error) {
+      console.log(error);
     }
 
-    if (newPoints >= 8000) {
-      newPoints = Math.round((newPoints * 2) / 10);
-    }
-    setPoints(points + newPoints);
-    setRounds(rounds - 1);
-    setLoading(false);
-    setMiniWindow(true);
-    setDistance(distance);
   }
 
   return (
@@ -199,6 +215,7 @@ const Home = ({ mylat, mylng }) => {
     <button id="guessButton" onClick={submitHandle}>
       Guess
     </button>
+    <Dashboard/>
     <div id="rounds_div">{rounds} / 5</div>
     {miniWindow && (
       <Submit
