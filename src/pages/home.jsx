@@ -5,13 +5,13 @@ import randomStreetView from "../script";
 import Submit from "./submit";
 import Score from "./Score";
 import Dashboard from "./dashboard";
+import Loader from "./loader";
 
-const Home = () => {
+const Home = ({loading , setLoading}) => {
   
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
   const [points, setPoints] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [miniWindow, setMiniWindow] = useState(false);
   const [distance, setDistance] = useState(0);
   const [rounds , setRounds] = useState(5);
@@ -23,7 +23,6 @@ const Home = () => {
   const [guessLat, setGuessLat] = useState(0);
   const [guessLng, setGuessLng] = useState(0);
 
-
   useEffect(() => {
     async function generateRandomPoint() {
       try {
@@ -34,115 +33,125 @@ const Home = () => {
         console.error("Error while generating random point:", error);
       }
     }
-  
+    setLoading(true);
     generateRandomPoint();
+    setLoading(false);
+    
+  }, []);
   
-    }, []);
 
+  useEffect( () => { 
 
-  useEffect(() => { 
+    setLoading(true);
+ 
     const loadGoogleMapScript = () => {
-      const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&callback=initMap`;
-      script.async = true;
-      script.defer = true;
-      window.initMap = initMap;
-      document.head.appendChild(script);
-    };
-
-    const initMap = () => {
-
-      const mapOptions = {
-        center: { lat: 0, lng: 0 },
-        zoom: 0.641,
-        minZoom: 0.641,
-        disableDefaultUI: true,
-        mapTypeControl: false,
-        keyboardShortcuts: false,
-        streetViewControl: false,
-        mapTypeControl: false,
-        mapTypeId: window.google.maps.MapTypeId.ROADMAP,
-        restriction: {
-          latLngBounds: {
-            north: 85, // Set the northern boundary (latitude)
-            south: -85, // Set the southern boundary (latitude)
-            west: -180, // Set the western boundary (longitude)
-            east: 180, // Set the eastern boundary (longitude)
-          },
-          strictBounds: false,
-        },
-        styles: [
-          {
-            featureType: "all",
-            elementType: "labels",
-            stylers: [{ visibility: "off" }],
-          },
-          {
-            featureType: "landscape",
-            elementType: "labels",
-            stylers: [{ visibility: "on" }],
-          },
-          {
-            featureType: "administrative.country",
-            elementType: "labels",
-            stylers: [{ visibility: "on" }],
-          },
-          {
-            featureType: "administrative.locality",
-            elementType: "labels",
-            stylers: [{ visibility: "on" }],
-          },
-        ],
-      };
-
-      const panoramaOptions = {
-        position: { lat, lng },
-        pov: { heading: 0, pitch: 0 },
-        zoom: 1,
-        disableDefaultUI: true,
-        showRoadLabels: false,
-        linksControl: true,
-        panoProviderOptions: {
-          hideLogo: true, // To hide the Google watermark/logo
-          disableCompass: true, // To disable the compass
-          panoId: "gs_id:remove_labels", // You can remove this line if it doesn't serve any specific purpose
-        },
-      };
-
-      // Create a Google Map
-      const map = new window.google.maps.Map(
-        mapContainerRef.current,
-        mapOptions
-      );
-      mapRef.current = map;
-
-      // Create a Street View
-      const panorama = new window.google.maps.StreetViewPanorama(
-        streetViewContainerRef.current,
-        panoramaOptions
-      );
-      map.setStreetView(panorama);
-
-      window.google.maps.event.addListener(map, "mousemove", function (e) {
-        map.setOptions({ draggableCursor: "crosshair" });
-      });
-      // Add click event listener to the map
-      map.addListener("click", (event) => {
-        placeMarker(event.latLng);
-      });
-    };
-
-    try {
-      if (!window.google) {
-        loadGoogleMapScript();
-      } else {
-        initMap();
+      try{
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&callback=initMap`;
+        script.async = true;
+        script.defer = true;
+        window.initMap = initMap;
+        document.head.appendChild(script);
       }
-    } catch (error) {
-      console.error("Error while initializing Google Maps:", error);
-    } 
-  }
-, [lat, lng]);
+      catch(error){
+        console.error("Error while loading google maps script:", error);
+      }
+    };
+      const initMap = () => {
+        
+        const mapOptions = {
+          center: { lat: 0, lng: 0 },
+          zoom: 0.641,
+          minZoom: 0.641,
+          disableDefaultUI: true,
+          mapTypeControl: false,
+          keyboardShortcuts: false,
+          streetViewControl: false,
+          mapTypeControl: false,
+          mapTypeId: window.google.maps.MapTypeId.ROADMAP,
+          restriction: {
+            latLngBounds: {
+              north: 85, // Set the northern boundary (latitude)
+              south: -85, // Set the southern boundary (latitude)
+              west: -180, // Set the western boundary (longitude)
+              east: 180, // Set the eastern boundary (longitude)
+            },
+            strictBounds: false,
+          },
+          styles: [
+            {
+              featureType: "all",
+              elementType: "labels",
+              stylers: [{ visibility: "off" }],
+            },
+            {
+              featureType: "landscape",
+              elementType: "labels",
+              stylers: [{ visibility: "on" }],
+            },
+            {
+              featureType: "administrative.country",
+              elementType: "labels",
+              stylers: [{ visibility: "on" }],
+            },
+            {
+              featureType: "administrative.locality",
+              elementType: "labels",
+              stylers: [{ visibility: "on" }],
+            },
+          ],
+        };
+  
+        const panoramaOptions = {
+          position: { lat, lng },
+          pov: { heading: 0, pitch: 0 },
+          zoom: 1,
+          disableDefaultUI: true,
+          showRoadLabels: false,
+          linksControl: true,
+          panoProviderOptions: {
+            hideLogo: true, // To hide the Google watermark/logo
+            disableCompass: true, // To disable the compass
+            panoId: "gs_id:remove_labels", // You can remove this line if it doesn't serve any specific purpose
+          },
+        };
+  
+        // Create a Google Map
+        const map = new window.google.maps.Map(
+          mapContainerRef.current,
+          mapOptions
+        );
+        mapRef.current = map;
+  
+        // Create a Street View
+        const panorama = new window.google.maps.StreetViewPanorama(
+          streetViewContainerRef.current,
+          panoramaOptions
+        );
+        map.setStreetView(panorama);
+  
+        window.google.maps.event.addListener(map, "mousemove", function (e) {
+          map.setOptions({ draggableCursor: "crosshair" });
+        });
+        // Add click event listener to the map
+        map.addListener("click", (event) => {
+          placeMarker(event.latLng);
+        });
+      };
+  
+        if (!window.google) {
+           loadGoogleMapScript();
+        } else {
+          initMap();
+        }
+
+        setLoading(false);
+
+  }, [lat, lng]);
+
+
+    
+  
   
   // Function to place a marker on the map
   function placeMarker(location) {
@@ -161,10 +170,12 @@ const Home = () => {
 
   async function generateRandomPoint() {
     try {
+      setLoading(true);
       const locations = await randomStreetView.getRandomLocations(1);
       setLat(locations[0][0]);
       setLng(locations[0][1]);
       setMiniWindow(false);
+      setLoading(false);
     } catch (error) {
       console.error("Error while generating random point:", error);
     }
@@ -200,7 +211,6 @@ const Home = () => {
   function submitHandle() {
     try {
       setLoading(true);
-
       const distance = CalcDistance(lat, guessLat, lng, guessLng);
       console.log(distance);
       var newPoints = Math.round(20000 - distance);
@@ -226,6 +236,10 @@ const Home = () => {
 
   return (
     <div>
+      {
+        loading && <Loader />
+      }
+
     <div id="streetViewContainer" ref={streetViewContainerRef}></div>
     <div id="mapContainer" ref={mapContainerRef}></div>
 
@@ -249,6 +263,8 @@ const Home = () => {
       />
       )}
       <Score points={points} />
+
+
   </div>
   );
 };

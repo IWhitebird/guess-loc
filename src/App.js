@@ -1,21 +1,15 @@
-// 35.6688263916039, 139.7625525894246
-// 35.655673915705094, 139.774480788404
-import logo from './logo.svg';
-import './App.css';
-import Home from './pages/home';
-import { useState , useEffect } from 'react';
-import Login from './pages/login';
-import Dashboard from './pages/dashboard';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Loader from './pages/loader';
 import Landing from './pages/landing';
+import Login from './pages/login';
+import Home from './pages/home';
 import Error from './pages/Error';
-import randomStreetView from "./script";
+import './App.css';
 
 function App() {
-
-  const [isAuth, setIsAuth] = useState(false);
-  const [lat, setLat] = useState();
-  const [lng, setLng] = useState();
+  const [isAuth, setIsAuth] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const checkAuthenticated = async () => {
     try {
@@ -33,33 +27,29 @@ function App() {
   };
 
   useEffect(() => {
-    checkAuthenticated();
+    setLoading(true);
+    const loadingTimeout = setTimeout(() => {
+      setLoading(false);
+      checkAuthenticated();
+    }, 200); 
+    return () => clearTimeout(loadingTimeout); // Clear the timeout when the component unmounts
   }, []);
-  
-  //35.6688263916039
-  //139.7625525894246
-
 
   return (
     <div>
+      {
+        loading ? <Loader /> : 
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login setAuth={setIsAuth}/>} />
-        <Route path="/register" element />
-
-        { 
-        isAuth ?  (
-            <>
-              <Route path="/home" element={<Home /> } />
-            </>
-          ) :
-          (<>
-            <Route path="/home" element={<Error message={"Your are not logged in"} />}/>
-          </>) 
-        }
-
-
+        <Route path="/login" element={<Login setAuth={setIsAuth} />} />
+        <Route path="/register" element={<div>Register Page</div>} />
+        {isAuth ? (
+          <Route path="/home" element={<Home loading={loading} setLoading={setLoading} />} />
+        ) : (
+          <Route path="/home" element={<Error message={"You are not logged in"} />} />
+        )}
       </Routes>
+     }
     </div>
   );
 }

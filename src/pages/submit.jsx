@@ -104,7 +104,6 @@ useEffect(() => {
     generateRandomPoint();
  }
 
-
   return (
     <div className="absolute w-[100%] h-[100%] bg-[#000000a8] z-10">
       <div id="submitMapContainer" ref={submitMapContainerRef}></div>
