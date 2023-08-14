@@ -6,10 +6,10 @@ import Submit from "./submit";
 import Score from "./Score";
 import Dashboard from "./dashboard";
 
-const Home = ({ mylat, mylng }) => {
+const Home = () => {
   
-  const [lat, setLat] = useState(mylat);
-  const [lng, setLng] = useState(mylng);
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
   const [points, setPoints] = useState(0);
   const [loading, setLoading] = useState(false);
   const [miniWindow, setMiniWindow] = useState(false);
@@ -23,7 +23,24 @@ const Home = ({ mylat, mylng }) => {
   const [guessLat, setGuessLat] = useState(0);
   const [guessLng, setGuessLng] = useState(0);
 
+
   useEffect(() => {
+    async function generateRandomPoint() {
+      try {
+        const locations = await randomStreetView.getRandomLocations(1);
+        setLat(locations[0][0]);
+        setLng(locations[0][1]);
+      } catch (error) {
+        console.error("Error while generating random point:", error);
+      }
+    }
+  
+    generateRandomPoint();
+  
+    }, []);
+
+
+  useEffect(() => { 
     const loadGoogleMapScript = () => {
       const script = document.createElement("script");
       script.src = `https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&callback=initMap`;

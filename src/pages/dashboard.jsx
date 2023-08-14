@@ -38,10 +38,10 @@ const Dashboard = () => {
 
     <div className='group-hover:scale-125'> 
       {/* Dropdown Content */}
-      <div className="hidden group-hover:block absolute text-lg top-[-10px] right-[110%] bg-white p-4 rounded-md shadow-md w-[150px]">
+      <div className="hidden group-hover:block absolute text-lg top-[-10px] right-[90%] bg-white p-4 rounded-md shadow-md w-[150px]">
         {/* Add your dropdown content here */}
-        <p className='p-2'>{userInfo.user_name}</p>
-        <p className='p-2'>Max:{userInfo.user_maxscore}</p>
+        <p className='p-2 text-2xl'>{userInfo.user_name}</p>
+        <p className='p-2 text-2xl'>Max:{userInfo.user_maxscore}</p>
       </div>
     </div>
 

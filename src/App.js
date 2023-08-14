@@ -9,10 +9,13 @@ import Dashboard from './pages/dashboard';
 import { Routes, Route } from 'react-router-dom';
 import Landing from './pages/landing';
 import Error from './pages/Error';
+import randomStreetView from "./script";
 
 function App() {
 
   const [isAuth, setIsAuth] = useState(false);
+  const [lat, setLat] = useState();
+  const [lng, setLng] = useState();
 
   const checkAuthenticated = async () => {
     try {
@@ -32,6 +35,9 @@ function App() {
   useEffect(() => {
     checkAuthenticated();
   }, []);
+  
+  //35.6688263916039
+  //139.7625525894246
 
 
   return (
@@ -44,7 +50,7 @@ function App() {
         { 
         isAuth ?  (
             <>
-              <Route path="/home" element={<Home mylat={35.655673915705094} mylng={139.774480788404} /> } />
+              <Route path="/home" element={<Home /> } />
             </>
           ) :
           (<>

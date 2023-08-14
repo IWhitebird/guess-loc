@@ -4,7 +4,7 @@
     background: #000000aa;
     width: 1000px;
     height: 400px;
-    left: 400px;
+    left: 450px;
     top: 200px;
     font-size: 50px;
     color: #fff;
@@ -23,7 +23,7 @@
     color: #fff1f1;
     width: 300px;
     height: 40px;
-    left: 750px;
+    left: 800px;
     top: 500px;
     border-radius: 4px;
     transition: all 0.2s ease-in-out;
