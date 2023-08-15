@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Dashboard = () => {
+const Dashboard = ({rounds}) => {
   const [userInfo, setUserInfo] = useState({
     user_name: "",
     user_maxscore: 0
@@ -23,7 +23,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     checkAuthenticated();
-  }, []);
+  }, [rounds == 5]);
 
   return (
 <div className='absolute top-3 right-1 group'>

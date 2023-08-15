@@ -1,35 +1,45 @@
 import React, { useEffect , useState } from 'react'
 import './finalresult.css'
+import Loading from './loader'
 
-const FinalResult = ({score , onReset}) => {
+const FinalResult = ({score , onReset , loading , setLoading , rounds}) => {
  
-  const [newScore , setNewScore] = useState(0);
-
-  useEffect(() => {
-
-
-    const updateScore = async () => {
-      try{
-        const response = await fetch("/dashboard/storescore", {
-          method: "PUT",
-          headers: { jwt_token: localStorage.token },
-          body: JSON.stringify({ score }),
-        });
-        const parseRes = await response.json();
-        if(parseRes.newScore){
-          setNewScore(1);
-        }
-        console.log(parseRes);
-      }
-      catch(error){
-        console.error("Error while updating score:", error);
+  const [newScore , setNewScore] = useState(false);
+  
+  const updateScore = async () => {
+    try{
+      const response = await fetch("http://localhost:5000/dashboard/storescore", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", token: localStorage.token },
+        body: JSON.stringify({ score }),
+      });
+      const parseRes = await response.json();
+      console.log("ress" , parseRes)
+      if(parseRes.change){
+        setNewScore(true);
       }
     }
-    updateScore();
-  } , []);
+    catch(error){
+      console.error("Error while updating score:", error);
+    }
+  }
+
+  useEffect(() => {
+    if (rounds === 0) {
+      setLoading(true);
+      updateScore();
+      setLoading(false);
+    }
+  }, [rounds]);
 
 
   return (
+
+    <>
+    {
+      loading && <Loading />
+    }
+
     <div className='w-full relative'>
         {
           newScore ? 
@@ -39,6 +49,8 @@ const FinalResult = ({score , onReset}) => {
         }
         <button id="btn_new" onClick={onReset}>New Game</button>
     </div>
+    </>
+
   )
 }
 

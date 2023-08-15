@@ -16,9 +16,15 @@ router.get("/userinfo", authorize, async (req, res) => {
   }
 });
 
-router.put("/storescore", authorize, async (req, res) => {
+router.post("/storescore", authorize, async (req, res) => {
   try {
-    const { score } = req.body;
+    const { score } = req.body; 
+
+    console.log(req.body)
+
+    if(!score){
+      return res.status(400).json({ error: "Score is required" });
+    }
 
     // Step 1: Retrieve the current maximum score of the user from the database
     const userResult = await pool.query(
@@ -40,9 +46,9 @@ router.put("/storescore", authorize, async (req, res) => {
         "UPDATE users SET user_maxscore = $1 WHERE user_id = $2",
         [score, req.user.id]
       );
-      res.json({ newScore : true ,  message: "Max score updated successfully" });
+      return res.status(200).json({ change : true ,  message: "Max score updated successfully" });
     } else {
-      res.json({ newScore : false , message: "Max score remains unchanged" });
+      return res.status(200).json({ change : false , message: "Max score remains unchanged" });
     }
   } catch (error) {
     console.error("Error while updating max score:", error);

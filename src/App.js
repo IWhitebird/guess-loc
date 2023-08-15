@@ -27,18 +27,17 @@ function App() {
   };
 
   useEffect(() => {
+
     setLoading(true);
-    const loadingTimeout = setTimeout(() => {
-      setLoading(false);
+    setTimeout(() => {
       checkAuthenticated();
-    }, 200); 
-    return () => clearTimeout(loadingTimeout); // Clear the timeout when the component unmounts
+      setLoading(false);
+    }, 200);
+  
   }, []);
 
   return (
     <div>
-      {
-        loading ? <Loader /> : 
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login setAuth={setIsAuth} />} />
@@ -49,7 +48,6 @@ function App() {
           <Route path="/home" element={<Error message={"You are not logged in"} />} />
         )}
       </Routes>
-     }
     </div>
   );
 }

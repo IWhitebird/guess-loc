@@ -174,8 +174,8 @@ const Home = ({loading , setLoading}) => {
       const locations = await randomStreetView.getRandomLocations(1);
       setLat(locations[0][0]);
       setLng(locations[0][1]);
-      setMiniWindow(false);
       setLoading(false);
+      setMiniWindow(false);
     } catch (error) {
       console.error("Error while generating random point:", error);
     }
@@ -246,24 +246,25 @@ const Home = ({loading , setLoading}) => {
     <button id="guessButton" onClick={submitHandle}>
       Guess
     </button>
-    <Dashboard/>
+    <Dashboard rounds={rounds}/>
     <div id="rounds_div">{rounds} / 5</div>
     {miniWindow && (
       <Submit
-      lat1={lat}
-      lng1={lng}
-      generateRandomPoint={generateRandomPoint}
-      distance={distance}
-      guessLat={guessLat}
-      guessLng={guessLng}
-      score={points}
-      setScore={setPoints}
-      rounds={rounds}
-      setRounds={setRounds}
+        lat1={lat}
+        lng1={lng}
+        generateRandomPoint={generateRandomPoint}
+        distance={distance}
+        guessLat={guessLat}
+        guessLng={guessLng}
+        score={points}
+        setScore={setPoints}
+        rounds={rounds}
+        setRounds={setRounds}
+        loading={loading}
+        setLoading={setLoading}
       />
       )}
       <Score points={points} />
-
 
   </div>
   );

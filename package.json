@@ -23,7 +23,9 @@
     "start": "react-dotenv && react-scripts start",
     "build": "react-dotenv && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "cd server && npm start",
+    "dev": "concurrently -n \"client,server\" -c \"bgYellow,bgGreen\" \"npm start\" \"npm run server\""
   },
   "eslintConfig": {
     "extends": [
