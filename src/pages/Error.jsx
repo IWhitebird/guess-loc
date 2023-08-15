@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Error = ({ message }) => {
 
   const handleLoginClick = () => {
-    window.location.href = "/";
+    window.location.href = "/login";
   };
 
 

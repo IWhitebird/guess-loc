@@ -8,7 +8,11 @@ const authorize = require("../middleware/authorize");
 router.post("/register" , async (req, res) => {
     try {
         //1. destructure the req.body (name, email, password)
-        const { name, email, password } = req.body;
+        const { name, email, password , confirm_password } = req.body;
+
+        if(password !== confirm_password){
+            return res.status(401).send("Password and Confirm Password are not same");
+        }
 
         //2. check if user exists (if user exists then throw error)
 

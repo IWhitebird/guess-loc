@@ -25,6 +25,13 @@ const Dashboard = ({rounds}) => {
     checkAuthenticated();
   }, [rounds == 5]);
 
+  const logoutHandle = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    window.location = "/";
+  };
+
+
   return (
 <div className='absolute top-3 right-1 group'>
   <div className='bg-[#ffffffa3] w-[100px] h-[100px] rounded-full scale-[0.65]'>
@@ -42,6 +49,7 @@ const Dashboard = ({rounds}) => {
         {/* Add your dropdown content here */}
         <p className='p-2 text-3xl font-bold'>{userInfo.user_name}</p>
         <p className='p-2 text-3xl'>Max:{userInfo.user_maxscore}</p>
+        <p className='p-2 text-3xl cursor-pointer text-red-400' onClick={logoutHandle}>Logout</p>
       </div>
     </div>
 

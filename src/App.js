@@ -5,6 +5,7 @@ import Landing from './pages/landing';
 import Login from './pages/login';
 import Home from './pages/home';
 import Error from './pages/Error';
+import Register from './pages/Register';
 import './App.css';
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login setAuth={setIsAuth} />} />
-        <Route path="/register" element={<div>Register Page</div>} />
+        <Route path="/register" element={<Register setAuth={setIsAuth} />} />
         {isAuth ? (
           <Route path="/home" element={<Home  loading={loading} 
                                               setLoading={setLoading}  />} />

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
 
 const Login = ({ setAuth }) => {
+  
   const [inputs, setInputs] = useState({
     email: "",
     password: ""
@@ -16,6 +19,7 @@ const Login = ({ setAuth }) => {
 
   const onSubmitForm = async e => {
     e.preventDefault();
+    const loadingtost = toast.loading("Loading...");
     try {
       const body = { email: inputs.email, password: inputs.password };
 
@@ -35,21 +39,27 @@ const Login = ({ setAuth }) => {
         setAuth(true);
         console.log(setAuth)
         window.location.href = "/home";
+        toast.dismiss(loadingtost);
+        toast.success("Logged in successfully");
       } else {
         setAuth(false);
+        toast.dismiss(loadingtost);
+        toast.error("Invalid Credentials");
       }
     } catch (err) {
       console.error(err.message);
+      toast.dismiss(loadingtost);
+      toast.error("Server Error");
     }
   };
 
   return (
-    <div className="h-screen w-[100vw] flex justify-center items-center bg-green-300">
+    <div className="h-screen w-[100vw] flex justify-center items-center bg-black">
       <form
         onSubmit={onSubmitForm}
-        className="max-w-md mx-auto p-6 bg-gray-100 rounded-lg shadow-lg scale-150"
+        className="max-w-md mx-auto p-6 bg-[#ffffff] rounded-lg shadow-lg scale-150"
       >
-        <h1 className="text-3xl font-bold mb-6">Login</h1>
+        <h1 className="text-3xl font-bold mb-6 text-black">Login</h1>
 
         <div className="mb-4">
           <input
@@ -75,14 +85,14 @@ const Login = ({ setAuth }) => {
 
         <button
           type="submit"
-          className="w-full px-4 py-2 bg-green-500 text-white rounded-lg focus:outline-none hover:bg-green-600"
+          className="w-full px-4 py-2 bg-black text-white rounded-lg focus:outline-none hover:scale-110 transition-all-ease-in-out duration-300"
         >
           Submit
         </button>
 
         <div className="text-center mt-4">
           <p>
-            Don't have an account? <Link to="#" className="text-blue-500">Register</Link>
+            Don't have an account? <Link to="/register" className="text-blue-500">Register</Link>
           </p>
         </div>
       </form>
