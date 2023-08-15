@@ -20,20 +20,15 @@ function App() {
 
       const parseRes = await res.json();
 
-      parseRes === true ? setIsAuth(true) : setIsAuth(false);
+      parseRes === true ? setIsAuth(true)  : setIsAuth(false);
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  useEffect(() => {
 
-    setLoading(true);
-    setTimeout(() => {
-      checkAuthenticated();
-      setLoading(false);
-    }, 200);
-  
+  useEffect(() => {
+    checkAuthenticated();
   }, []);
 
   return (
@@ -43,7 +38,8 @@ function App() {
         <Route path="/login" element={<Login setAuth={setIsAuth} />} />
         <Route path="/register" element={<div>Register Page</div>} />
         {isAuth ? (
-          <Route path="/home" element={<Home loading={loading} setLoading={setLoading} />} />
+          <Route path="/home" element={<Home  loading={loading} 
+                                              setLoading={setLoading}  />} />
         ) : (
           <Route path="/home" element={<Error message={"You are not logged in"} />} />
         )}

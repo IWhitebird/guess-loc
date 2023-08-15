@@ -1,6 +1,6 @@
-/* iframe{
+iframe{
   display: none;
-} */
+}
 
 
 .App {
@@ -97,5 +97,7 @@
     transform: rotate(360deg);
   }
 } 
+
+
 
 

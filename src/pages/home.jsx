@@ -11,6 +11,7 @@ const Home = ({loading , setLoading}) => {
   
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
+
   const [points, setPoints] = useState(0);
   const [miniWindow, setMiniWindow] = useState(false);
   const [distance, setDistance] = useState(0);
@@ -24,26 +25,16 @@ const Home = ({loading , setLoading}) => {
   const [guessLng, setGuessLng] = useState(0);
 
   useEffect(() => {
-    async function generateRandomPoint() {
-      try {
-        const locations = await randomStreetView.getRandomLocations(1);
-        setLat(locations[0][0]);
-        setLng(locations[0][1]);
-      } catch (error) {
-        console.error("Error while generating random point:", error);
-      }
-    }
     setLoading(true);
     generateRandomPoint();
     setLoading(false);
-    
   }, []);
   
 
   useEffect( () => { 
 
     setLoading(true);
- 
+
     const loadGoogleMapScript = () => {
       try{
         const script = document.createElement("script");
@@ -57,8 +48,8 @@ const Home = ({loading , setLoading}) => {
         console.error("Error while loading google maps script:", error);
       }
     };
-      const initMap = () => {
-        
+
+    const initMap = () => {   
         const mapOptions = {
           center: { lat: 0, lng: 0 },
           zoom: 0.641,
@@ -150,9 +141,6 @@ const Home = ({loading , setLoading}) => {
   }, [lat, lng]);
 
 
-    
-  
-  
   // Function to place a marker on the map
   function placeMarker(location) {
     if (marker) {
@@ -180,6 +168,7 @@ const Home = ({loading , setLoading}) => {
       console.error("Error while generating random point:", error);
     }
   }
+
 
   function CalcDistance(lat1, lat2, lon1, lon2) {
     // The math module contains a function
@@ -234,9 +223,6 @@ const Home = ({loading , setLoading}) => {
 
   }
 
-  function autoSubmit() {
-      
-  }
 
   return (
     <div>
