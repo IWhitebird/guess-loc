@@ -1,7 +1,6 @@
 import StreetView from "./StreetView";
 import Google from "./Google.js";
 import EventEmitter from 'events';
-import env from "react-dotenv";
 
 class RandomStreetView extends EventEmitter {
     constructor() {
