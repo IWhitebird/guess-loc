@@ -234,6 +234,10 @@ const Home = ({loading , setLoading}) => {
 
   }
 
+  function autoSubmit() {
+      
+  }
+
   return (
     <div>
       {

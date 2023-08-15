@@ -108,7 +108,6 @@ useEffect(() => {
     <div className="absolute w-[100%] h-[100%] bg-[#000000a8] z-10">
       <div id="submitMapContainer" ref={submitMapContainerRef}></div>
       <div id="distance_div">{Math.round(distance)} Km</div>
-
       {
         rounds === 0 ? (<FinalResult score={score} onReset={onReset} loading={loading} setLoading={setLoading} rounds={rounds} />) : 
         (<div>
