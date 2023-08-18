@@ -9,8 +9,8 @@ import Loader from "./loader";
 
 const Home = ({loading , setLoading , dailyCounter , setDailyCounter}) => {
   
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
 
   const [points, setPoints] = useState(0);
   const [miniWindow, setMiniWindow] = useState(false);
@@ -34,17 +34,19 @@ const Home = ({loading , setLoading , dailyCounter , setDailyCounter}) => {
 
   useEffect( () => { 
 
-  const loadGoogleMapScript = () => {
-      try{
-        const script = document.createElement("script");
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&callback=initMap`;
-        script.async = true;
-        script.defer = true;
-        window.initMap = initMap;
-        document.head.appendChild(script);
-      }
-      catch(error){
-        console.error("Error while loading google maps script:", error);
+    const loadGoogleMapScript = () => {
+      if(lat && lng){
+        try{
+          const script = document.createElement("script");
+          script.src = `https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&callback=initMap`;
+          script.async = true;
+          script.defer = true;
+          window.initMap = initMap;
+          document.head.appendChild(script);
+        }
+        catch(error){
+          console.error("Error while loading google maps script:", error);
+        }
       }
     };
 
@@ -134,7 +136,6 @@ const Home = ({loading , setLoading , dailyCounter , setDailyCounter}) => {
         } else {
           initMap();
         }
-
   }, [lat, lng]);
 
 
@@ -208,8 +209,6 @@ const Home = ({loading , setLoading , dailyCounter , setDailyCounter}) => {
     // calculate the result
     return c * r;
   }
-
-
   // Example usage in the submitHandle function:
   function submitHandle() {
     try {
