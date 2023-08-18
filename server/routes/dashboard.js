@@ -63,7 +63,6 @@ router.get("/counter" , async (req , res) => {
       SELECT counter_value
       FROM daily_counter
     `);
-
     const counterValue = result.rows[0].counter_value;
     res.json({ counterValue });
   }
@@ -89,7 +88,6 @@ router.get("/update-counter" , async (req , res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 })
-
 
 async function resetCounter() {
   try {

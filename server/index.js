@@ -4,7 +4,15 @@ const cors = require("cors");
 
 //middleware
 
-app.use(cors());
+const PORT = process.env.PORT || 5000;
+
+app.use(cors(
+    [
+        "http://localhost:3000",
+        "http://localhost:5000",
+        "https://geolocquiz.netlify.app"
+    ]
+));
 app.use(express.json());
 
 //routes
@@ -13,7 +21,7 @@ app.use("/auth", require("./routes/jwtAuth"));
 
 app.use("/dashboard", require("./routes/dashboard"));  
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     console.log("Server is running on port 5000");
     }
 );
