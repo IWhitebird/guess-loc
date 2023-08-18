@@ -33,8 +33,6 @@ const Home = ({loading , setLoading}) => {
 
   useEffect( () => { 
 
-    setLoading(true);
-
     const loadGoogleMapScript = () => {
       try{
         const script = document.createElement("script");
@@ -135,8 +133,6 @@ const Home = ({loading , setLoading}) => {
         } else {
           initMap();
         }
-
-        setLoading(false);
 
   }, [lat, lng]);
 

@@ -5,6 +5,7 @@ const jwtGenerator = require("../utils/jwtGenerator");
 const authorize = require("../middleware/authorize");
 
 
+
 router.post("/register" , async (req, res) => {
     try {
         //1. destructure the req.body (name, email, password)
@@ -91,6 +92,7 @@ router.get("/verify", authorize, (req, res) => {
       res.status(500).send("Server error");
     }
 });
+
 
 
 module.exports = router;

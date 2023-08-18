@@ -8,5 +8,11 @@ CREATE TABLE users(
     user_maxscore INTEGER DEFAULT 0
 );
 
+CREATE TABLE daily_counter (
+    id SERIAL PRIMARY KEY,
+    counter_value INTEGER DEFAULT 0
+);
+
+INSERT INTO daily_counter (counter_value) VALUES (0);
 
 -- INSERT INTO users (user_name, user_email, user_password) VALUES ('henry', 'henryly213@gmail.com', 'kthl8822');

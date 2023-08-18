@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const authorize = require("../middleware/authorize");
 const pool = require("../db");
+const cron = require('node-cron');
 
 router.get("/userinfo", authorize, async (req, res) => {
   try {
@@ -55,5 +56,53 @@ router.post("/storescore", authorize, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+router.get("/counter" , async (req , res) => {
+  try{
+    const result = await pool.query(`
+      SELECT counter_value
+      FROM daily_counter
+    `);
+
+    const counterValue = result.rows[0].counter_value;
+    res.json({ counterValue });
+  }
+  catch(error){
+    console.error('Error getting counter:', error);
+    res.status(500).send("Server error");
+  }
+})
+
+router.post("/update-counter" , async (req , res) => {
+  try {
+    // Increment the counter and return the updated value
+    const result = await pool.query(`
+      UPDATE daily_counter
+      SET counter_value = counter_value + 5
+      RETURNING counter_value
+    `);
+
+    const updatedCounter = result.rows[0].counter_value;
+    res.json({ counter: updatedCounter });
+  } catch (error) {
+    console.error('Error incrementing counter:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
+
+async function resetCounter() {
+  try {
+    await pool.query(`
+      UPDATE daily_counter
+      SET counter_value = 0
+    `);
+    console.log('Counter has been reset to 0.');
+  } catch (error) {
+    console.error('Error resetting counter:', error);
+  }
+}
+
+cron.schedule('0 0 * * *', resetCounter);
 
 module.exports = router;
