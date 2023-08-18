@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
-
+import env from "react-dotenv";
 
 const Login = ({ setAuth }) => {
   
@@ -23,7 +23,7 @@ const Login = ({ setAuth }) => {
     try {
       const body = { email: inputs.email, password: inputs.password };
 
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch(env.BASE_URL + "/auth/login", {
         method: "POST",
         headers: {
           "Content-type": "application/json"

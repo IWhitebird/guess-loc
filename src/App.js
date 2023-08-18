@@ -5,6 +5,7 @@ import Login from './pages/login';
 import Home from './pages/home';
 import Error from './pages/Error';
 import Register from './pages/Register';
+import env from "react-dotenv";
 import './App.css';
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
 
   const checkAuthenticated = async () => {
     try {
-      const res = await fetch("http://localhost:5000/auth/verify", {
+      const res = await fetch( env.BASE_URL + "/auth/verify", {
         method: "GET",
         headers: { token: localStorage.token }
       });
@@ -28,7 +29,7 @@ function App() {
   };
   
   const fetchcounter = async () => {
-    const res = await fetch('http://localhost:5000/dashboard/counter' ,
+    const res = await fetch( env.BASE_URL + "/dashboard/counter" ,
       {
         method : "GET",
       });

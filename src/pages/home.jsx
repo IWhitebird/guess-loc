@@ -156,7 +156,7 @@ const Home = ({loading , setLoading , dailyCounter , setDailyCounter}) => {
 
   const updateReqCounter = async () =>  {
     try{
-      const res = await fetch('http://localhost:5000/dashboard/update-counter', {
+      const res = await fetch(env.BASE_URL + "/dashboard/update-counter", {
         method : "GET",
         }
       )

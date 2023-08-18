@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './submit.css';
 import Score from './Score';
 import FinalResult from './FinalResult';
+import env from "react-dotenv";
 
 const Submit = ({ 
   lat1, 

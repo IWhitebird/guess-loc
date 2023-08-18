@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
-
+import env from "react-dotenv";
 
 const Register = ({ setAuth }) => {
     const [inputs, setInputs] = useState({
@@ -29,7 +29,7 @@ const Register = ({ setAuth }) => {
                        confirm_password: inputs.confirm_password 
                      };
    
-        const response = await fetch("http://localhost:5000/auth/register", {
+        const response = await fetch(env.BASE_URL + "/auth/register", {
           method: "POST",
           headers: {
             "Content-type": "application/json"

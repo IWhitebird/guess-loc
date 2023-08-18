@@ -1,6 +1,7 @@
 import React, { useEffect , useState } from 'react'
 import './finalresult.css'
 import Loading from './loader'
+import env from "react-dotenv";
 
 const FinalResult = ({score , onReset , loading , setLoading , rounds}) => {
  
@@ -8,7 +9,7 @@ const FinalResult = ({score , onReset , loading , setLoading , rounds}) => {
   
   const updateScore = async () => {
     try{
-      const response = await fetch("http://localhost:5000/dashboard/storescore", {
+      const response = await fetch( env.BASE_URL + "/dashboard/storescore", {
         method: "POST",
         headers: { "Content-Type": "application/json", token: localStorage.token },
         body: JSON.stringify({ score }),

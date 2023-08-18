@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import env from "react-dotenv";
 
 const Dashboard = ({rounds}) => {
   const [userInfo, setUserInfo] = useState({
@@ -8,7 +9,7 @@ const Dashboard = ({rounds}) => {
 
   const checkAuthenticated = async () => {
     try {
-      const res = await fetch("http://localhost:5000/dashboard/userinfo", {
+      const res = await fetch( env.BASE_URL + "/dashboard/userinfo", {
         method: "GET",
         headers: { token: localStorage.token }
       });
