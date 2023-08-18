@@ -7,7 +7,7 @@ import Score from "./Score";
 import Dashboard from "./dashboard";
 import Loader from "./loader";
 
-const Home = ({loading , setLoading}) => {
+const Home = ({loading , setLoading , dailyCounter , setDailyCounter}) => {
   
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
@@ -24,6 +24,7 @@ const Home = ({loading , setLoading}) => {
   const [guessLat, setGuessLat] = useState(0);
   const [guessLng, setGuessLng] = useState(0);
 
+
   useEffect(() => {
     setLoading(true);
     generateRandomPoint();
@@ -33,7 +34,7 @@ const Home = ({loading , setLoading}) => {
 
   useEffect( () => { 
 
-    const loadGoogleMapScript = () => {
+  const loadGoogleMapScript = () => {
       try{
         const script = document.createElement("script");
         script.src = `https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&callback=initMap`;
@@ -152,9 +153,25 @@ const Home = ({loading , setLoading}) => {
     setGuessLng(marker.position.lng());
   }
 
+  const updateReqCounter = async () =>  {
+    try{
+      const res = await fetch('http://localhost:5000/dashboard/update-counter', {
+        method : "GET",
+        }
+      )
+      const data = await res.json();
+      setDailyCounter(data.counterValue);
+    }
+    catch(error){
+      console.error("Error while updating request counter:", error);
+    }
+  }
+  console.log("my res" , dailyCounter)
+
   async function generateRandomPoint() {
     try {
       setLoading(true);
+      updateReqCounter();
       const locations = await randomStreetView.getRandomLocations(1);
       setLat(locations[0][0]);
       setLng(locations[0][1]);
@@ -191,6 +208,7 @@ const Home = ({loading , setLoading}) => {
     // calculate the result
     return c * r;
   }
+
 
   // Example usage in the submitHandle function:
   function submitHandle() {
@@ -248,6 +266,8 @@ const Home = ({loading , setLoading}) => {
         setRounds={setRounds}
         loading={loading}
         setLoading={setLoading}
+        dailyCounter={dailyCounter}
+        setDailyCounter={setDailyCounter}
       />
       )}
       <Score points={points} />

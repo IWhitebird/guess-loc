@@ -11,6 +11,7 @@ import './App.css';
 function App() {
   const [isAuth, setIsAuth] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [dailyCounter, setDailyCounter] = useState(false);
 
   const checkAuthenticated = async () => {
     try {
@@ -26,26 +27,51 @@ function App() {
       console.error(err.message);
     }
   };
-
+  
+  const fetchcounter = async () => {
+    const res = await fetch('http://localhost:5000/dashboard/counter' ,
+      {
+        method : "GET",
+      });
+    const data = await res.json();
+    setDailyCounter(data.counterValue);
+  }
+  
 
   useEffect(() => {
     checkAuthenticated();
+    fetchcounter();
   }, []);
 
+
+
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login setAuth={setIsAuth} />} />
-        <Route path="/register" element={<Register setAuth={setIsAuth} />} />
-        {isAuth ? (
-          <Route path="/home" element={<Home  loading={loading} 
-                                              setLoading={setLoading}  />} />
-        ) : (
-          <Route path="/home" element={<Error message={"You are not logged in"} />} />
-        )}
-      </Routes>
-    </div>
+      <div>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login setAuth={setIsAuth} />} />
+          <Route path="/register" element={<Register setAuth={setIsAuth} />} />
+          {isAuth ? (
+            dailyCounter >= 150 ? (
+              <Route path="/home" element={<Error message={"You have reached your daily limit"} />} />
+            ) : (
+              <Route
+                path="/home"
+                element={
+                  <Home
+                    loading={loading}
+                    setLoading={setLoading}
+                    dailyCounter={dailyCounter}
+                    setDailyCounter={setDailyCounter}
+                  />
+                }
+              />
+            )
+          ) : (
+            <Route path="/home" element={<Error message={"You are not logged in"} />} />
+          )}
+        </Routes>
+      </div>
   );
 }
 

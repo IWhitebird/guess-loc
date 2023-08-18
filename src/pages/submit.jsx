@@ -3,7 +3,23 @@ import './submit.css';
 import Score from './Score';
 import FinalResult from './FinalResult';
 
-const Submit = ({ lat1, lng1 ,guessLat, guessLng, generateRandomPoint, score , setScore, distance  , rounds , setRounds , loading , setLoading }) => {
+const Submit = ({ 
+  lat1, 
+  lng1 ,
+  guessLat,
+  guessLng, 
+  generateRandomPoint,
+  score , 
+  setScore, 
+  distance  , 
+  rounds , 
+  setRounds , 
+  loading , 
+  setLoading,
+  dailyCounter,
+  setDailyCounter }) => {
+ 
+ 
   const submitMapContainerRef = useRef(null);
 
   const [midLat, setMidLat] = useState(0);

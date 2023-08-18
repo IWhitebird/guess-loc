@@ -73,17 +73,17 @@ router.get("/counter" , async (req , res) => {
   }
 })
 
-router.post("/update-counter" , async (req , res) => {
+router.get("/update-counter" , async (req , res) => {
   try {
     // Increment the counter and return the updated value
     const result = await pool.query(`
       UPDATE daily_counter
-      SET counter_value = counter_value + 5
+      SET counter_value = counter_value + 1
       RETURNING counter_value
     `);
 
-    const updatedCounter = result.rows[0].counter_value;
-    res.json({ counter: updatedCounter });
+    const counterValue = result.rows[0].counter_value;
+    res.json({ counterValue });
   } catch (error) {
     console.error('Error incrementing counter:', error);
     res.status(500).json({ error: 'Internal server error' });
