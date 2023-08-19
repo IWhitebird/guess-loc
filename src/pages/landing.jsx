@@ -12,7 +12,7 @@ const Landing = () => {
   return (
     <div className='flex w-[100vw] h-[100vh] overflow-hidden main'>
       <h4 className='heading' style={{ pointerEvents: 'none' }}>GeoLocQuiz</h4>
-        {true ? (
+        {isLoading ? (
           <div className="text-white absolute left-[480px] top-[400px] scale-75">
             <div className='eloader mt-6 self-center'></div>
           </div>
