@@ -10,7 +10,8 @@ app.use(cors(
     [
         "http://localhost:3000",
         "http://localhost:5000",
-        "https://geolocquiz.netlify.app"
+        "https://geolocquiz.netlify.app",
+        "https://guess-loc.vercel.app"
     ]
 ));
 app.use(express.json());
