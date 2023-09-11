@@ -11,10 +11,12 @@ import EarthCloudsMap from "../assets/textures/8k_earth_clouds.jpg";
 import { TextureLoader } from "three";
 
 const Earth = () => {
+
   const [colorMap, normalMap, specularMap, cloudsMap] = useLoader(
     TextureLoader,
     [EarthDayMap, EarthNormalMap, EarthSpecularMap, EarthCloudsMap]
   );
+
 
   const earthRef = useRef();
   const cloudsRef = useRef();
@@ -31,26 +33,28 @@ const Earth = () => {
 
   return (
     <>
-      <pointLight color="#f6f3ea" position={[1, 0, 5]} intensity={1.5} />
+      <pointLight color="#f6f3ea" position={[1, 0, 5]} intensity={2.5} />
       <Stars
         radius={300}
         depth={60}
-        count={20000}
+        count={6000}
         factor={7}
         saturation={0}
         fade={true}
         ref={starRef}
       />
       <mesh ref={cloudsRef} position={[0, 0, 3]}>
-        <sphereGeometry args={[1.005, 32, 32]} />
+        <sphereGeometry args={[1.009, 32, 32]} />
         <meshPhongMaterial
           map={cloudsMap}
-          opacity={0.4}
+          opacity={0.3}
           depthWrite={true}
           transparent={true}
           side={THREE.DoubleSide}
-        />
+          />
       </mesh>
+
+
       <mesh ref={earthRef} position={[0, 0, 3]}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshPhongMaterial specularMap={specularMap} />
