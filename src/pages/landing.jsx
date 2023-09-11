@@ -7,15 +7,11 @@ import Earth from "./earth";
 
 const Landing = () => {
 
-  function LoadingIndicator() {
-    return <div className="">Loading...</div>;
-  }
-
   return (
     <>
       <div className="relative w-[100vw] h-[100vh] bg-black">
         <Canvas>
-          <Suspense fallback={<LoadingIndicator />}>
+          <Suspense fallback={null}>
             <Earth />
           </Suspense>
         </Canvas>
