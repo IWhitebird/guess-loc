@@ -37,7 +37,7 @@ const Home = ({ loading, setLoading, dailyCounter, setDailyCounter }) => {
       if (lat && lng) {
         try {
           const script = document.createElement("script");
-          script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCST6N0ws0jg8hkcCHSs7KYIQHc8ytcsPU&callback=initMap`;
+          script.src = `https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&callback=initMap`;
           script.async = true;
           script.defer = true;
           window.initMap = initMap;
