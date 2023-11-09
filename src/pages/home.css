@@ -86,14 +86,5 @@
 
     #rounds_div{
       position: absolute;
-      font-size: xx-large;
-      font-weight: 700;
-      background: #53525270;
-      color: rgb(128, 255, 0);
-      text-align: center;
-      height: 50px;
-      min-width: 200px; 
-      left: 40px;
-      bottom: 40px; 
       z-index: 10;    
     }

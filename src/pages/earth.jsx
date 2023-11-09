@@ -26,7 +26,7 @@ const Earth = () => {
     const elapsedTime = clock.getElapsedTime();
 
     earthRef.current.rotation.y = elapsedTime / 12;
-    cloudsRef.current.rotation.y = elapsedTime / 7;
+    cloudsRef.current.rotation.y = elapsedTime / 10;
     starRef.current.rotation.y = elapsedTime / 50;
 
   });
@@ -36,8 +36,8 @@ const Earth = () => {
       <pointLight color="#f6f3ea" position={[1, 0, 5]} intensity={2.5} />
       <Stars
         radius={300}
-        depth={60}
-        count={6000}
+        depth={100}
+        count={10000}
         factor={7}
         saturation={0}
         fade={true}
@@ -47,7 +47,7 @@ const Earth = () => {
         <sphereGeometry args={[1.009, 32, 32]} />
         <meshPhongMaterial
           map={cloudsMap}
-          opacity={0.3}
+          opacity={0.4}
           depthWrite={true}
           transparent={true}
           side={THREE.DoubleSide}
@@ -61,8 +61,8 @@ const Earth = () => {
         <meshStandardMaterial
           map={colorMap}
           normalMap={normalMap}
-          metalness={0.4}
-          roughness={0.7}
+          metalness={0}
+          roughness={0.9}
         />
         <OrbitControls
           enableZoom={true}
