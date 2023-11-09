@@ -9,12 +9,13 @@
 
 #generateButton{
     position: absolute;
+    font-size: 1.3rem;
     background-color: #10e13d8f;
     border-radius: 30px;
     height: 70px;
-    width: 300px; 
-    left: 800px;
-    bottom: 80px; 
+    width: 200px; 
+    left:900px;
+    bottom: 50px; 
     z-index: 2;  
     transition: all 0.2s ease-in-out;
   }

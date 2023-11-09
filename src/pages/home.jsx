@@ -18,7 +18,7 @@ const Home = ({ loading, setLoading, dailyCounter, setDailyCounter }) => {
   const mapContainerRef = useRef(null);
   const streetViewContainerRef = useRef(null);
   const mapRef = useRef(null);
-  const [timer, setTimer] = useState(null); // new var
+  const [pauseTimer, setPauseTimer] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState('00:00'); // Set initial time in seconds
 
   let marker;
@@ -27,6 +27,7 @@ const Home = ({ loading, setLoading, dailyCounter, setDailyCounter }) => {
 
   useEffect(() => {
     setLoading(true);
+    setPauseTimer(false);
     generateRandomPoint();
     setLoading(false);
   }, []);
@@ -36,7 +37,7 @@ const Home = ({ loading, setLoading, dailyCounter, setDailyCounter }) => {
       if (lat && lng) {
         try {
           const script = document.createElement("script");
-          script.src = `https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&callback=initMap`;
+          script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCST6N0ws0jg8hkcCHSs7KYIQHc8ytcsPU&callback=initMap`;
           script.async = true;
           script.defer = true;
           window.initMap = initMap;
@@ -134,29 +135,28 @@ const Home = ({ loading, setLoading, dailyCounter, setDailyCounter }) => {
   }, [lat, lng]);
 
   useEffect(() => {
-    if (!loading) {
-      let timeInSeconds = 120;
+    let timerId;
+    let timeInSeconds = 120;
 
-      const timerId = setInterval(() => {
-        if (timeInSeconds <= 1) {
+    if (!pauseTimer) {
+      timerId = setInterval(() => {
+        if (timeInSeconds <= 0) {
           clearInterval(timerId);
           submitHandle();
         } else {
-          timeInSeconds -= 1;
-
+          timeInSeconds--;
           const minutes = Math.floor(timeInSeconds / 60);
           const seconds = timeInSeconds % 60;
-          const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-          setTimeRemaining(formattedTime);
+          const formattedMinutes = minutes.toString().padStart(2, '0');
+          setTimeRemaining(`${formattedMinutes}:${seconds.toString().padStart(2, '0')}`);
         }
       }, 1000);
-
-      return () => {
-        clearInterval(timerId);
-      };
     }
-  }, [loading, submitHandle]);
+
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [pauseTimer]);
 
   function placeMarker(location) {
     if (marker) {
@@ -196,6 +196,8 @@ const Home = ({ loading, setLoading, dailyCounter, setDailyCounter }) => {
       setLng(locations[0][1]);
       setLoading(false);
       setMiniWindow(false);
+      setPauseTimer(false);
+      setTimeRemaining('00:00');
     } catch (error) {
       console.error("Error while generating random point:", error);
     }
@@ -217,11 +219,12 @@ const Home = ({ loading, setLoading, dailyCounter, setDailyCounter }) => {
   }
 
   function submitHandle() {
+    setPauseTimer(true);
     try {
       setLoading(true);
       const distance = CalcDistance(lat, guessLat, lng, guessLng);
       if (distance === 0) {
-        setPoints(5000);
+        setPoints(0);
       } else {
         let newPoints = Math.max(0, 5000 - distance);
         newPoints = Math.round(newPoints);
@@ -229,8 +232,6 @@ const Home = ({ loading, setLoading, dailyCounter, setDailyCounter }) => {
       }
       setRounds(rounds - 1);
       setLoading(false);
-      setTimeRemaining(60);
-      setTimer(null);
       setMiniWindow(true);
       setDistance(distance);
     } catch (error) {
@@ -304,6 +305,9 @@ const Home = ({ loading, setLoading, dailyCounter, setDailyCounter }) => {
           dailyCounter={dailyCounter}
           setDailyCounter={setDailyCounter}
           points={points}
+          setTimeRemaining={setTimeRemaining}
+          setGuessLat={setGuessLat}
+          setGuessLng={setGuessLng}
         />
       )}
     </div>

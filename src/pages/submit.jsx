@@ -16,6 +16,7 @@ const Submit = ({
   loading,
   setLoading,
   points,
+  setTimeRemaining,
 }) => {
 
 
@@ -59,6 +60,7 @@ const Submit = ({
         position: { lat: lat1, lng: lng1 },
         map,
         title: 'Marker 1',
+        animation: window.google.maps.Animation.BOUNCE,
       });
 
       let marker2 = new window.google.maps.Marker({
@@ -107,6 +109,7 @@ const Submit = ({
     setScore(0);
     setRounds(5);
     generateRandomPoint();
+    setTimeRemaining(120);
   }
 
   return (
@@ -125,9 +128,13 @@ const Submit = ({
       </div>
       {
         rounds === 0 ? (<FinalResult score={score} onReset={onReset} loading={loading} setLoading={setLoading} rounds={rounds} />) :
-          (<div>
-            <button id="generateButton" onClick={generateRandomPoint}>Next</button>
+          (<div className='z-50'>
+            <button className='shadow-lg' id="generateButton" onClick={generateRandomPoint}>Next</button>
+            <div className='flex'>
             <button id="btn_reset" onClick={onReset}>Reset</button>
+            <button className='absolute shadow-lg transition-all ease-in-out duration-300 bottom-[5rem] left-[27rem] rounded-full bg-red-500 px-10 py-3 hover:bg-red-700 hover:scale-105' 
+            onClick={()=> window.location.href="/mode"}>Back to menu</button>
+            </div>
           </div>)
 
       }

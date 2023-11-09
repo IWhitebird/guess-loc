@@ -103,6 +103,11 @@ const Login = ({ setAuth }) => {
           </p>
         </div>
       </form>
+      <div className="absolute z-50 top-0 left-0 p-10">
+        <div className="border-white border rounded-full cursor-pointer transition-all ease-in-out duration-300 hover:scale-105">
+          <p onClick={() => window.location.href = "/"} className="text-white text-center text-3xl py-1 px-4">{"<"}</p>
+        </div>
+      </div>
     </div>
   );
 };

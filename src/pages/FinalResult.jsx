@@ -59,7 +59,7 @@ const FinalResult = ({ score, onReset, loading, setLoading, rounds }) => {
               <div id="final_score">Your Score is <span className='text-cyan-400'>{score}</span></div>
             )
           )}
-          <div className='absolute bottom-20'>
+          <div className='absolute bottom-20 z-50'>
             <button className='text-white text-xl bg-lime-500 px-7 py-2 rounded-full transition-all ease-in-out duration-300 hover:border-r-8 hover:border-r-cyan-600 hover:scale-105' onClick={onReset}>Go again?</button>
           </div>
         </div>
