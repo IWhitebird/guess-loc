@@ -48,27 +48,27 @@
 
   #btn_reset {
     position: absolute;
-    background-color: #FFD700; /* Use the color of your choice (e.g., gold) */
+    background-color: #FFD700;
     border: none;
     border-radius: 30px;
     height: 50px;
     width: 200px;
-    left: 300px; /* Center the button horizontally */
-    transform: translateX(-50%); /* Center the button horizontally */
+    left: 300px;
+    transform: translateX(-50%);
     bottom: 80px;
     z-index: 2;
     cursor: pointer;
     font-size: 16px;
-    color: #000000; /* Text color (white) */
+    color: #000000; 
     font-weight: bold;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
     transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   }
   
   #btn_reset:hover {
-    background-color: #FFC700; /* Change the color on hover (e.g., a slightly lighter gold) */
-    transform: translateX(-50%) scale(1.05); /* Add a slight scale effect on hover */
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Increase the shadow on hover */
+    background-color: #FFC700;
+    transform: translateX(-50%) scale(1.05); 
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); 
   }
 
   

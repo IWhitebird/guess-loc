@@ -1,11 +1,8 @@
 
 #final_score{
-    position: absolute;
     background: #000000aa;
     width: 1000px;
     height: 400px;
-    left: 450px;
-    top: 200px;
     font-size: 50px;
     color: #fff;
     border: 1px solid #5f5e5ef0;
@@ -15,22 +12,6 @@
     padding-top: 80px;
     text-shadow: 2px 2px 2px #000000;
     font-weight: 600;
+    z-index: 30;
 }
 
-#btn_new {
-    position: absolute;
-    background: #74d584;
-    color: #fff1f1;
-    width: 300px;
-    height: 40px;
-    left: 800px;
-    top: 500px;
-    border-radius: 4px;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  #btn_new:hover {
-    background-color: #5bb56b; 
-    cursor: pointer;
-    scale: 1.3; 
-  }
