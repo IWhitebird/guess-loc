@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Loader from './loader';
 
 const Error = ({ message }) => {
 
   useEffect(() => {
     setTimeout(() => {
       if (message === "You are not logged in") {
-        localStorage.removeItem('token');
         window.location.href = "/login";
       } else if (message === "You have reached your daily limit") {
-        localStorage.removeItem('token');
         window.location.href = "/";
       } else {
         window.location.href = "/";

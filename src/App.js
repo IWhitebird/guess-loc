@@ -54,7 +54,7 @@ function App() {
         <Route path="/register" element={<Register setAuth={setIsAuth} />} />
         <Route path="/mode" element={<ModeSelect isAuth={isAuth} daily={dailyCounter} />} />
         {isAuth ? (
-          dailyCounter >= 150 ? (
+          dailyCounter >= 15000 ? (
             <Route path="/home" element={<Error message={"You have reached your daily limit"} />} />
           ) : (
             <Route
