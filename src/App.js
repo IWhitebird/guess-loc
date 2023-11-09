@@ -45,11 +45,14 @@ function App() {
 
   return (
     <div>
+      <div className='absolute z-50 bottom-0 right-0 p-3'>
+        <p className='text-white'>beta version</p>
+      </div>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login setAuth={setIsAuth} />} />
         <Route path="/register" element={<Register setAuth={setIsAuth} />} />
-        <Route path="/mode" element={<ModeSelect isAuth={isAuth} daily={dailyCounter}/>} />
+        <Route path="/mode" element={<ModeSelect isAuth={isAuth} daily={dailyCounter} />} />
         {isAuth ? (
           dailyCounter >= 150 ? (
             <Route path="/home" element={<Error message={"You have reached your daily limit"} />} />

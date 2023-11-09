@@ -13,12 +13,13 @@ function ModeSelect({ daily }) {
   const [dailys, setDailys] = useState(0);
 
   useEffect(() => {
-    setDailys(daily);
     if (!token) {
       window.location.href = '/home';
+    } else {
+      setDailys(daily);
     }
-  }, []);
-
+  }, [daily]);
+  
   useEffect(() => {
     setImg(data[currentIndex].image);
     setText(data[currentIndex].text);
